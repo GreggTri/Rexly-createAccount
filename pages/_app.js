@@ -6,7 +6,7 @@ const roboto = Roboto({
 })
 function MyApp({ Component, pageProps }) {
   return (
-    <main className={roboto.className}>
+    <main class="h-full" className={roboto.className}>
       <Component {...pageProps} />
     </main>
   )
