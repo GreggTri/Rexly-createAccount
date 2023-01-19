@@ -26,7 +26,8 @@ export default function createAccount(){
     const user = {
       "email": email,
       "phoneNumber": phoneNumber,
-      "password": password
+      "password": password,
+      "fromPhoneLink": false
     }
     
     let response = await fetch('http://localhost:8000/v1/user/createAccount', {
