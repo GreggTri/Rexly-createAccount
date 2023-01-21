@@ -20,7 +20,7 @@ phases:
 artifacts:
   files:
     - .next/**/*
-    - locales/**/*
     - static/**/*
     - package.json
     - next.config.js
+    - public/
