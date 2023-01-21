@@ -19,6 +19,8 @@ phases:
 
 artifacts:
   files:
-    - '**/*'
-    - node_modules/**/*
     - .next/**/*
+    - locales/**/*
+    - static/**/*
+    - package.json
+    - next.config.js
