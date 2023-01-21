@@ -3,14 +3,15 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 16
+      nodejs: 16.19.0
     commands:
     - echo Executing Install Phase
 
   pre_build:
     commands:
       - echo Executing Pre_Build Phase
-      - npm install
+      - npm i
+      - npm install next -g
   build:
     commands:
     - echo Executing Build Phase on `date`
@@ -19,6 +20,3 @@ phases:
 artifacts:
   files:
     - '**/*'
-    - '!node_modules/'
-    - '!.next/'
-  name: RexlycreateAccount-$(date +%Y-%m-%d)
