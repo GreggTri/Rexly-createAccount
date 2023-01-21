@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import classnames from 'classnames'
 import { Roboto } from '@next/font/google'
 
 const roboto = Roboto({
@@ -6,11 +7,10 @@ const roboto = Roboto({
 })
 function MyApp({ Component, pageProps }) {
   return (
-    <main class="h-full" className={roboto.className}>
+    <main className={classnames('h-full', roboto.className)}>
       <Component {...pageProps} />
     </main>
   )
-
 }
 
 export default MyApp
