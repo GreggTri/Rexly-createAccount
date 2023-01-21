@@ -20,4 +20,5 @@ artifacts:
   files:
     - '**/*'
     - '!node_modules/'
+    - '!.next/'
   name: RexlycreateAccount-$(date +%Y-%m-%d)
