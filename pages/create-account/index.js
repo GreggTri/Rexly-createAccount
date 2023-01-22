@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useRouter } from "next/router"
 import Head from 'next/head'
+require('dotenv').config()
 
 export default function createAccount(){
   
@@ -30,7 +31,7 @@ export default function createAccount(){
       "fromPhoneLink": false
     }
     
-    let response = await fetch('http://localhost:8000/v1/user/createAccount', {
+    let response = await fetch(process.env.MAIN_SERVER, {
       method: "POST",
       headers: { "content-type": "application/json"},
       body: JSON.stringify(user)
