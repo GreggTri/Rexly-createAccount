@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { useRouter } from "next/router"
 import Head from 'next/head'
-require('dotenv').config()
 
 export default function createAccountWithPhoneNumber(){
   
