@@ -48,7 +48,7 @@ export default function createAccountWithPhoneNumber(){
       "fromPhoneLink": true
     }
     
-    let response = await fetch(process.env.MAIN_SERVER_CREATE_ACC, {
+    let response = await fetch(`${process.env.NEXT_PUBLIC_MAIN_SERVER}/v1/user/createAccount`, {
       method: "POST",
       headers: { "content-type": "application/json"},
       body: JSON.stringify(user)
