@@ -44,7 +44,7 @@ export default function createAccount(){
       "fromPhoneLink": false
     }
     
-    let response = await fetch(`${process.env.MAIN_SERVER}/v1/user/createAccount`, {
+    let response = await fetch(process.env.MAIN_SERVER_CREATE_ACC, {
       method: "POST",
       headers: { "content-type": "application/json"},
       body: JSON.stringify(user)
