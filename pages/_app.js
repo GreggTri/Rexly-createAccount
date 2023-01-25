@@ -1,5 +1,6 @@
 import '../styles/globals.css'
 import classnames from 'classnames'
+import Head from 'next/head'
 import { Roboto } from '@next/font/google'
 
 const roboto = Roboto({
@@ -8,6 +9,10 @@ const roboto = Roboto({
 function MyApp({ Component, pageProps }) {
   return (
     <main className={classnames('h-full', roboto.className)}>
+      <Head>
+        <title>Rexly - create Account</title>
+        <link rel="icon" href="/RexlyIcon.png"/>
+      </Head>
       <Component {...pageProps} />
     </main>
   )

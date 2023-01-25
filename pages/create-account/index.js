@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { useRouter } from "next/router"
-import Head from 'next/head'
+import Image from 'next/image';
+
+import rexlyLogo from '../../public/RexlyLogoTransparent.svg'
 
 export default function createAccount(){
   
@@ -14,13 +16,25 @@ export default function createAccount(){
   const handleEmail = event  => {
     setEmail(event.target.value)
   }
-  const handlePhoneNumber = event  => {
-    setNumber(event.target.value)
-  }
+
   const handlePassword = event  => {
     setPassword(event.target.value)
   }
 
+  function isNumberKey(event) {
+    event.preventDefault()
+    let input = event.target.value
+    const pattern = /^[0-9]*$/;
+
+    if(pattern.test(input)){
+      setNumber(event.target.value)
+      return true
+    }else{
+      setNumber(phoneNumber)
+      return false
+    }
+  }
+  
   const handleSubmit = async (event) => {
     event.preventDefault()
     const user = {
@@ -30,41 +44,39 @@ export default function createAccount(){
       "fromPhoneLink": false
     }
     
-    let response = await fetch(process.env.MAIN_SERVER, {
+    let response = await fetch(`${process.env.MAIN_SERVER}/v1/user/createAccount`, {
       method: "POST",
       headers: { "content-type": "application/json"},
       body: JSON.stringify(user)
-    }).then(json => {console.log(json)}).catch(err => {console.log(err)})
+    })
     
     //error handling
-    if(response.status_code == 400) {
-      if(response == "[400 Error]: Bad Request"){
+    if(response.status != 201) {
+      if(response.status == 500){
+        setError("Sorry, something went wrong with our servers. Please try again.")
+      }
+      else if(response.body == "[400 Error]: Bad Request" && response.status == 400){
         setError("Please fill out all the fields in the form")
       }
-      else {
-        setError("A user with this email already exists")
+      else if(response.status == 400){
+        setError("A user with this email may already exists")
       }
-      
-    }else if(response.status_code == 500){
-      setError("Sorry, something went wrong with our servers. Please try again.")
+      else {
+        setError("Sorry, something went wrong with our servers. Please try again.")
+      } 
     }
   }
   
   return (
     <div className="flex justify-center h-full px-8 py-10 sm:px-6 lg:px-8 bg-cream">
-      <Head>
-        <title>Rexly - create Account</title>
-        <link rel="icon" href="/RexlyIcon.svg"/>
-        
-      </Head>
-      
       <div className="w-full h-full max-w-md space-y-6">
-        <svg className="block mx-auto" width="200" height="200">
-          <image href="/RexlyLogoTransparent.svg" rel="Logo" x="0" y="0" width="200" height="200" />
-        </svg>
+        <Image src={rexlyLogo} alt="Logo" className="block mx-auto" width="200" height="200"/>
         <h1 className="mt-8 text-3xl font-bold tracking-tight text-center text-darkGreen">
           Create your Account
         </h1>
+        <h3 className="text-base font-medium tracking-tight text-center text-green-600 underline">
+          Please Note: We are only allowing US Numbers at this time.
+        </h3>
         <div className="mt-8 space-y-6">
           <form onSubmit={handleSubmit}>
             <input
@@ -82,10 +94,13 @@ export default function createAccount(){
             name="phoneNumber"
             type="text"
             autoComplete="phoneNumber"
+            minLength={10}
+            maxLength={10}
             required
             className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border rounded-none appearance-none border-lightGreen focus:z-10 focus:border-darkGreen focus:outline-none focus:ring-darkGreen sm:text-sm"
             placeholder="Phone Number"
-            onChange={handlePhoneNumber}
+            onChange={isNumberKey}
+            value={phoneNumber}
             />
             <input
             id="password"
