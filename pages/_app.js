@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }) {
     <main className={classnames('h-full', roboto.className)}>
       <Head>
         <title>Rexly - create Account</title>
-        <link rel="icon" type="image/png" href="/RexlyIcon.png"/>
+        <link rel="icon" type="image/png" href="/images/RexlyIcon.png"/>
       </Head>
       <Component {...pageProps} />
     </main>

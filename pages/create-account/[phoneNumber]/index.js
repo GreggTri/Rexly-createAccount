@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useRouter } from "next/router"
 import Image from 'next/image';
-
+import axios from 'axios'
 import rexlyLogo from '../../../public/RexlyLogoTransparent.svg'
 
 export default function createAccountWithPhoneNumber(){
@@ -48,11 +48,7 @@ export default function createAccountWithPhoneNumber(){
       "fromPhoneLink": true
     }
     
-    let response = await fetch(`${process.env.NEXT_PUBLIC_MAIN_SERVER}/v1/user/createAccount`, {
-      method: "POST",
-      headers: { "content-type": "application/json"},
-      body: JSON.stringify(user)
-    })
+    let response = await axios.post(`${process.env.NEXT_PUBLIC_MAIN_SERVER}/v1/user/createAccount`, user)
     
     //error handling
     if(response.status != 201) {
