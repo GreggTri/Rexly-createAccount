@@ -48,7 +48,7 @@ export default function createAccountWithPhoneNumber(){
       "fromPhoneLink": true
     }
     
-    let response = await axios.post(`${process.env.NEXT_PUBLIC_MAIN_SERVER}/v1/user/createAccount`, user)
+    let response = await axios.post(`${process.env.MAIN_SERVER}/v1/user/createAccount`, user)
     
     //error handling
     if(response.status != 201) {

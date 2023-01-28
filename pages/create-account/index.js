@@ -4,6 +4,7 @@ import Image from 'next/image';
 import axios from 'axios'
 import rexlyLogo from '../../public/RexlyLogoTransparent.svg'
 
+
 export default function createAccount(){
   
   const router = useRouter()
@@ -44,7 +45,8 @@ export default function createAccount(){
       "fromPhoneLink": false
     }
     
-    let response = await axios.post(`${process.env.NEXT_PUBLIC_MAIN_SERVER}/v1/user/createAccount`, user)
+    console.log(process.env.NEXT_PUBLIC_MAIN_SERVER);
+    let response = await axios.post(`${process.env.MAIN_SERVER}/v1/user/createAccount`, user)
     
     //error handling
     if(response.status != 201) {
