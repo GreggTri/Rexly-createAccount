@@ -10,6 +10,7 @@ export default function createAccountWithPhoneNumber(){
   const paramNumber = router.query.phoneNumber
 
   const [responseError, setError] = React.useState("")
+  const [responseSuccess, setSuccess] = React.useState("")
   const [email, setEmail] = React.useState("")
   const [password, setPassword] = React.useState("")
   const [Value, setValue] = useState('');
@@ -48,22 +49,20 @@ export default function createAccountWithPhoneNumber(){
       "fromPhoneLink": true
     }
     
-    let response = await axios.post(`${process.env.MAIN_SERVER}/v1/user/createAccount`, user)
-    
-    //error handling
-    if(response.status != 201) {
-      if(response.status == 500){
-        setError("Sorry, something went wrong with our servers. Please try again.")
-      }
-      else if(response.body == "[400 Error]: Bad Request" && response.status == 400){
+    try{
+      let response = await axios.post('/api/createAccount', user)
+      
+      setSuccess(response.data)
+    }
+    catch(error){
+      setSuccess('')      
+      setError("Sorry, something went wrong with our servers. Please try again.")
+
+      if(error.response.data == "[400 Error]: Bad Request"){
         setError("Please fill out all the fields in the form")
-      }
-      else if(response.status == 400){
+      }else if( error.response.data == "[400 Error]: User already exists"){
         setError("A user with this email may already exists")
       }
-      else {
-        setError("Sorry, something went wrong with our servers. Please try again.")
-      } 
     }
   }
   
@@ -114,6 +113,7 @@ export default function createAccountWithPhoneNumber(){
             onChange={handlePassword}
             />
             {responseError ? <span className="text-red-500">{responseError}</span> : <></>}
+            {responseSuccess ? <span className="text-green-500">{responseSuccess}</span> : <></>}
             <button 
             className="relative flex justify-center w-full px-4 py-2 mt-5 text-base font-semibold tracking-wider text-white border border-transparent rounded-md bg-darkGreen group hover:bg-darkGreen-700 focus:outline-none focus:ring-2 focus:ring-lightGreen focus:ring-offset-2"
             type='submit'>Submit</button>
